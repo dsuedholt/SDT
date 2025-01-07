@@ -94,11 +94,6 @@ extern SDTWindFlow *SDTWindFlow_fromJSON(const json_value *x);
 extern SDTWindFlow *SDTWindFlow_setParams(SDTWindFlow *x, const json_value *j,
                                           unsigned char unsafe);
 
-/** @brief DEPRECATED: Use #SDTWindFlow_update, instead */
-extern void SDTWindFlow_setFilters(SDTWindFlow *x) __attribute__((
-    deprecated("SDTWindFlow_setFilters() has been renamed SDTWindFlow_update() "
-               "to be consistent with other types in the SDT library.")));
-
 /** @brief Update filter coefficients.
 Should be always called after changing the sampling rate.
 @param[in] x Pointer to a SDTWindFlow instance */
@@ -472,12 +467,6 @@ extern void SDTExplosion_setWaveSpeed(SDTExplosion *x, double f);
 /** @brief Sets the propagation velocity of the blast wind.
 @param[in] f Propagation velocity of the blast wind, in m/s */
 extern void SDTExplosion_setWindSpeed(SDTExplosion *x, double f);
-
-/** @brief DEPRECATED: Use #SDTExplosion_trigger, instead */
-extern void SDTExplosion_update(SDTExplosion *x) __attribute__((deprecated(
-    "SDTExplosion_update() has been renamed SDTExplosion_trigger() "
-    "to be consistent with other types in the SDT library and avoid "
-    "confusion with the usual behaviour of SDT*_update() functions.")));
 
 /** @brief Resets the internal state of the object
 to the beginning of the explosion. */

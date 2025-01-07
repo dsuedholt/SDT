@@ -110,12 +110,6 @@ extern void SDTBubble_setDepth(SDTBubble *x, double f);
 0.1 */
 extern void SDTBubble_setRiseFactor(SDTBubble *x, double f);
 
-/** @brief DEPRECATED: Use #SDTBubble_trigger, instead */
-extern void SDTBubble_update(SDTBubble *x) __attribute__((deprecated(
-    "SDTBubble_update() has been renamed SDTBubble_trigger() "
-    "to be consistent with other types in the SDT library and avoid "
-    "confusion with the usual behaviour of SDT*_update() functions.")));
-
 /** @brief Triggers a new bubble */
 extern void SDTBubble_trigger(SDTBubble *x);
 
