@@ -86,8 +86,6 @@ void SDTBubble_setRiseFactor(SDTBubble *x, double f) {
   x->riseFactor = SDT_fclip(f, 0.0, MAX_RISE);
 }
 
-void SDTBubble_update(SDTBubble *x) { return SDTBubble_trigger(x); }
-
 void SDTBubble_trigger(SDTBubble *x) {
   double pRadius;
 

@@ -8,6 +8,10 @@
 #include "SDTInteractors.h"
 #include "SDTStructs.h"
 
+#ifdef _WIN32
+#include <malloc.h>
+#endif
+
 #define MAX_POS 10000.0
 
 struct SDTResonator {
@@ -407,7 +411,11 @@ void SDTResonator_setActiveModes(SDTResonator *x, unsigned int i) {
 }
 
 void SDTResonator_applyForce(SDTResonator *x, unsigned int pickup, double f) {
+#ifdef _WIN32
+  double *fs = _malloca(x->activeModes * sizeof(double));
+#else
   double fs[x->activeModes];
+#endif
   int mode;
 
   if (pickup < x->nPickups) {
@@ -421,7 +429,12 @@ void SDTResonator_applyForce(SDTResonator *x, unsigned int pickup, double f) {
 
 double SDTResonator_computeEnergy(SDTResonator *x, unsigned int pickup,
                                   double f) {
-  double out, fs[x->activeModes], p, v;
+#ifdef _WIN32
+  double *fs = _malloca(x->activeModes * sizeof(double));
+#else
+  double fs[x->activeModes];
+#endif
+  double out, p, v;
   int mode;
 
   out = 0.0;

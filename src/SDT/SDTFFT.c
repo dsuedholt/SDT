@@ -3,6 +3,10 @@
 #include <stdlib.h>
 #include "SDTCommon.h"
 
+#ifdef _WIN32
+#include <malloc.h>
+#endif
+
 struct SDTFFT {
   SDTComplex *fftPhasors, *ifftPhasors, *fftrPhasors, *ifftrPhasors;
   unsigned int *twiddles, n;
@@ -78,7 +82,12 @@ void SDTFFT_fft(SDTFFT *x, int inverse, SDTComplex *in, SDTComplex *out) {
 }
 
 void SDTFFT_fftr(SDTFFT *x, double *in, SDTComplex *out) {
-  SDTComplex tmp[x->n], sum, dif, mul;
+#ifdef _WIN32
+  SDTComplex *tmp = _malloca(x->n * sizeof(SDTComplex));
+#else
+  SDTComplex tmp[x->n];
+#endif
+  SDTComplex sum, dif, mul;
   unsigned int i, j;
 
   SDTFFT_fft(x, 0, (SDTComplex *)in, tmp);
@@ -102,7 +111,12 @@ void SDTFFT_fftr(SDTFFT *x, double *in, SDTComplex *out) {
 }
 
 void SDTFFT_ifftr(SDTFFT *x, SDTComplex *in, double *out) {
-  SDTComplex tmp[x->n], sum, dif, mul;
+#ifdef _WIN32
+  SDTComplex *tmp = _malloca(x->n * sizeof(SDTComplex));
+#else
+  SDTComplex tmp[x->n];
+#endif
+  SDTComplex sum, dif, mul;
   unsigned int i, j;
 
   tmp[0].r = in[0].r + in[x->n].r;

@@ -9,6 +9,10 @@
 #include <string.h>
 #include <time.h>
 
+#ifdef _WIN32
+#include <malloc.h>
+#endif
+
 double SDT_sampleRate = 0.0;
 double SDT_timeStep = 0.0;
 
@@ -132,7 +136,11 @@ void SDT_hanning(double *sig, int n) {
 }
 
 void SDT_haar(double *sig, long n) {
+#ifdef _WIN32
+  double *tmp = _malloca(n * sizeof(double));
+#else
   double tmp[n];
+#endif
   long x, i, j, k, l;
 
   memcpy(tmp, sig, n * sizeof(double));
@@ -148,7 +156,11 @@ void SDT_haar(double *sig, long n) {
 }
 
 void SDT_ihaar(double *sig, long n) {
+#ifdef _WIN32
+  double *tmp = _malloca(n * sizeof(double));
+#else
   double tmp[n];
+#endif
   long x, i, j, k, l;
 
   memcpy(tmp, sig, n * sizeof(double));
@@ -243,7 +255,12 @@ void SDT_ones(double *sig, int n) {
 
 double SDT_rank(double *x, int n, int k) {
   int i, j, l, r;
-  double a[n], pivot, swap;
+#ifdef _WIN32
+  double *a = _malloca(n * sizeof(double));
+#else
+  double a[n];
+#endif
+  double pivot, swap;
 
   for (i = 0; i < n; i++) {
     a[i] = x[i];
